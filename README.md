@@ -1,6 +1,6 @@
 # LAB - 3
 
-## Project: Madlibs
+## Project: madlib-cli
 
 ## Author: Dutch Foy
 
