@@ -30,3 +30,7 @@ def test_read_template_raises_exception_with_bad_path():
     with pytest.raises(FileNotFoundError):
         path = "missing.txt"
         read_template(path)
+
+        
+if __name__ == '__main__':
+    pytest.main()

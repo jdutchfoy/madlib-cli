@@ -10,10 +10,13 @@ def main():
     # Parse the template to get the number of inputs needed and the text to be displayed
     stripped, parts = parse_template(template_content)
 
+    # Prompt the user for input words
     words = user_input(parts)
 
+    # Generate the story based on the user input and the template
     new_story = merge(stripped, words)
 
+    # Save the story to a file
     save_to_file(new_story)
 
 # Define the intro function that prints an introduction message
@@ -26,15 +29,19 @@ def intro():
     print("When you're done, a story will be generated based on your input")
     print("*" * 32)
     print("")
+    
+def save_to_file(story):
+    with open("story.txt", "w") as f:
+        f.write(story)
 
 # Define the read_template function that reads the template file
 
 
 def read_template(filename):
     try:
-
+        # Open the file for reading
         with open(filename, "r") as template_file:
-
+            # Read the file contents and remove any leading/trailing whitespace
             template_content = template_file.read().strip()
             return template_content
     except FileNotFoundError:
@@ -56,7 +63,7 @@ def parse_template(template):
 
     # Loop through the template and extract the text to be displayed and the number of inputs needed
     for bracket in range(count):
-
+        # Find the index of the first "{" and "}"
         start = temp_template.index("{")
         end = temp_template.index("}")
 
@@ -76,34 +83,29 @@ def parse_template(template):
     # Return the stripped text and the tuple of parts
     return stripped, parts
 
-# Define the user_info function that prompts the user for info
+# Define the user_input function that prompts the user for input words
 
 
 def user_input(prompt):
-    # Create an empty list to store the user info
+    # Create an empty list to store the user input
     inputs = []
 
-    # Loop through the prompts and ask the user for info
+    # Loop through the prompts and ask the user for input
     for word_prompt in prompt:
         inputs.append(input(f"{word_prompt}: "))
 
+    # Return the list of user input
     return inputs
 
-# Define merge function that generates the story based on the user info and the template
+# Define the merge function that generates the story based on the user input and the template
 
 
 def merge(stripped, words):
     new_story = stripped
 
-    # Loop through the user info and replace in the template with the user info
+    # Loop through the user info in  template with the user input
     for word in words:
         index = new_story.index("{")
 
-        new_story = new_story[0:index] + word + new_story[index+2:]
-
-    # Print it
-
-
-def save_to_file(story):
-    with open('story.txt', 'w') as file:
-        file.write(story)
+        # put the user info back in
+        new_story = new_story[0:index] + word + new_story
