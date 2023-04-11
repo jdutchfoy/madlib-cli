@@ -1,27 +1,4 @@
-# Define the main function that runs the game
-def main():
-    # Print an introduction message
-    intro()
-
-    # Read the template file
-    template_content = read_template(
-        "../assets/dark_and_stormy_night_template.txt")
-
-    # Parse the template to get the number of inputs needed and the text to be displayed
-    stripped, parts = parse_template(template_content)
-
-    # Prompt the user for input words
-    words = user_input(parts)
-
-    # Generate the story based on the user input and the template
-    new_story = merge(stripped, words)
-
-    # Save the story to a file
-    save_to_file(new_story)
-
-# Define the intro function that prints an introduction message
-
-
+# get your intro message
 def intro():
     print("*" * 32)
     print("Welcome to the Mad Libs Game!")
@@ -29,31 +6,24 @@ def intro():
     print("When you're done, a story will be generated based on your input")
     print("*" * 32)
     print("")
-    
-def save_to_file(story):
-    with open("story.txt", "w") as f:
-        f.write(story)
 
-# Define the read_template function that reads the template file
+# Define your read template
 
 
 def read_template(filename):
     try:
-        # Open the file for reading
+        # file???
         with open(filename, "r") as template_file:
-            # Read the file contents and remove any leading/trailing whitespace
+            # remember the whitespace from last time
             template_content = template_file.read().strip()
             return template_content
     except FileNotFoundError:
-        # If the file is not found, raise an error
+        # if I can’t locate raise an error
         raise FileNotFoundError
-
-# Define the parse_template function that parses the template to get the number of inputs needed and the text to be displayed
 
 
 def parse_template(template):
     count = template.count("{")
-
     if count == 0:
         return "no prompts!"
 
@@ -61,28 +31,24 @@ def parse_template(template):
     parts = []
     stripped = ""
 
-    # Loop through the template and extract the text to be displayed and the number of inputs needed
+    # Loop through the template and extract the info to show the amount of info to show
     for bracket in range(count):
         # Find the index of the first "{" and "}"
         start = temp_template.index("{")
         end = temp_template.index("}")
 
-        # Extract the text to be displayed and the number of inputs needed
+        # remove the info to be displayed and the amount of info needed
         stripped = stripped + temp_template[0:start+1] + "}"
         parts.append(temp_template[(start+1):end])
 
-        # Remove the extracted text from the template
         temp_template = temp_template[(end+1):]
 
     # Add in the last part of the template after the last "}"
     stripped = stripped + temp_template
 
-    # Convert the list of parts to a tuple
     parts = tuple(parts)
 
-    # Return the stripped text and the tuple of parts
     return stripped, parts
-
 # Define the user_input function that prompts the user for input words
 
 
@@ -94,7 +60,6 @@ def user_input(prompt):
     for word_prompt in prompt:
         inputs.append(input(f"{word_prompt}: "))
 
-    # Return the list of user input
     return inputs
 
 # Define the merge function that generates the story based on the user input and the template
@@ -103,9 +68,29 @@ def user_input(prompt):
 def merge(stripped, words):
     new_story = stripped
 
-    # Loop through the user info in  template with the user input
+    # Loop through the user input and replace the prompts with the user input
     for word in words:
         index = new_story.index("{")
+        new_story = new_story[0:index] + word + new_story[index+1:]
 
-        # put the user info back in
-        new_story = new_story[0:index] + word + new_story
+    return new_story
+
+# Define the save_to_file function that saves the story to a file
+
+
+def save_to_file(story):
+    with open("story.txt", "w") as f:
+        f.write(story)
+
+# Define the main function that runs story
+
+
+def main():
+    # Print an introduction message
+    intro()
+    template_content = read_template(
+        "../assets/dark_and_stormy_night_template.txt")
+    stripped, parts = parse_template(template_content)
+    words = user_input(parts)
+    # begin
+    new_story = merge(stripped, words)
