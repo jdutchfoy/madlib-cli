@@ -1,5 +1,5 @@
 import pytest
-from main import read_template, parse_template, merge
+from madlib_cli.main import read_template, parse_template, merge
 
 
 def test_read_template_returns_stripped_string():

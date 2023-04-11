@@ -1,5 +1,4 @@
 import pytest
-from main import read_template, parse_template, merge
 
 # Define the intro function that prints an introduction message
 def intro():
@@ -14,13 +13,14 @@ def intro():
 def read_template(filename):
     try:
         # Open the file for reading
-        with open(filename, "r") as template_file:
+        with open("assets/" + filename, "r") as template_file:
             # Read the file contents and remove any leading/trailing whitespace
             template_content = template_file.read().strip()
             return template_content
     except FileNotFoundError:
         # If the file is not found, raise an error
         raise FileNotFoundError
+
 
 # Define the parse_template function that parses the template to get the number of inputs needed and the text to be displayed
 def parse_template(template):
