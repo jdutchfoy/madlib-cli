@@ -1,4 +1,5 @@
 import pytest
+from main import read_template, parse_template, merge
 
 # Define the intro function that prints an introduction message
 def intro():
