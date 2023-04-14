@@ -1,4 +1,4 @@
-import pytest
+import os
 
 # Define the intro function that prints an introduction message
 def intro():
@@ -13,13 +13,13 @@ def intro():
 def read_template(filename):
     try:
         # Open the file for reading
-        with open("assets/" + filename, "r") as template_file:
+        with open(os.path.join("assets", filename), "r") as template_file:
             # Read the file contents and remove any leading/trailing whitespace
             template_content = template_file.read().strip()
             return template_content
     except FileNotFoundError:
         # If the file is not found, raise an error
-        raise FileNotFoundError
+        raise FileNotFoundError(f"{filename} not found in assets folder.")
 
 
 # Define the parse_template function that parses the template to get the number of inputs needed and the text to be displayed
@@ -87,7 +87,7 @@ def main():
     intro()
 
     # Read the template file
-    template_content = read_template("../assets/dark_and_stormy_night_template.txt")
+    template_content = read_template("dark_and_stormy_night_template.txt")
 
     # Parse the template to get the number of inputs needed and the text to be displayed
     stripped, parts = parse_template(template_content)
@@ -101,5 +101,3 @@ def main():
     # Save the story to a file
     save_to_file(new_story)
 
-if __name__ == '__main__':
-    main()
